@@ -5,7 +5,10 @@ import {
   Divider,
   Checkbox,
   Stack,
+  Flex,
+  Icon,
 } from "@strapi/design-system";
+import Plus from "@strapi/icons/Plus";
 
 const items = [
   {
@@ -44,7 +47,30 @@ const TodoCard = () => {
         Todos
       </Typography>
       <Box paddingTop={2} paddingBottom={6}>
-        <Divider />
+        <Box paddingBottom={2}>
+          <Divider />
+        </Box>
+        <Typography
+          fontSize={2}
+          textColor="primary600"
+          as="button"
+          type="button"
+          onClick={() => {
+            console.log("add todo item");
+          }}
+        >
+          <Flex>
+            <Icon
+              as={Plus}
+              color="primary600"
+              marginRight={2}
+              width={3}
+              height={3}
+            />
+            Add todo
+          </Flex>
+        </Typography>
+
         <Stack paddingTop={3} size={2}>
           {items.map((item, index) => (
             <Checkbox
