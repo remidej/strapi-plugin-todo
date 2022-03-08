@@ -1,0 +1,33 @@
+{
+  "dependencies": {
+    "@strapi/plugin-graphql": "^4.0.0",
+    "lodash.set": "^4.3.2",
+    "@strapi/strapi": "4.1.2",
+    "@strapi/plugin-users-permissions": "4.1.2",
+    "@strapi/plugin-i18n": "4.1.2",
+    "sqlite3": "5.0.2"
+  },
+  "name": "todo-test-app",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A Strapi application",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi"
+  },
+  "devDependencies": {},
+  "author": {
+    "name": "A Strapi developer"
+  },
+  "strapi": {
+    "uuid": "85793bbc-ffd4-4f4d-975a-1920f2f8b936",
+    "template": "corporate"
+  },
+  "engines": {
+    "node": ">=12.x.x <=16.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}
