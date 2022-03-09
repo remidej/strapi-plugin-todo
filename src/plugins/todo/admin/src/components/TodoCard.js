@@ -72,6 +72,7 @@ const TodoCard = () => {
         </Typography>
 
         <Stack paddingTop={3} size={2}>
+          {/* List existing todo items */}
           {items.map((item, index) => (
             <Checkbox
               value={item.isChecked}
@@ -89,6 +90,10 @@ const TodoCard = () => {
               </span>
             </Checkbox>
           ))}
+          {/* Create todo item */}
+          <Checkbox value={false}>
+            <input type="text" style={{ border: 0 }} />
+          </Checkbox>
         </Stack>
       </Box>
     </Box>
