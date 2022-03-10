@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
 module.exports = {
-  index(ctx) {
-    ctx.body = strapi
-      .plugin('todo')
-      .service('myService')
-      .getWelcomeMessage();
+  async create(ctx) {
+    ctx.body = await strapi
+      .plugin("todo")
+      .service("myService")
+      .createTask(ctx.request.body);
   },
 };

@@ -1,7 +1,10 @@
-'use strict';
+"use strict";
 
 module.exports = ({ strapi }) => ({
-  getWelcomeMessage() {
-    return 'Welcome to Strapi 🚀';
+  async createTask(task) {
+    const createdTask = await strapi.entityService.create("plugin::todo.task", {
+      data: task,
+    });
+    return createdTask;
   },
 });

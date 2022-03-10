@@ -1,3 +1,7 @@
-'use strict';
+"use strict";
 
-module.exports = {};
+const task = require("./task");
+
+module.exports = {
+  task: { schema: task },
+};
