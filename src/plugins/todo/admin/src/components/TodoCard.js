@@ -9,6 +9,7 @@ import {
   Icon,
 } from "@strapi/design-system";
 import Plus from "@strapi/icons/Plus";
+import { useCMEditViewDataManager } from "@strapi/helper-plugin";
 import axiosInstance from "../utils/axiosInstance";
 import CreateTaskModal from "./CreateTaskModal";
 
@@ -29,6 +30,8 @@ const items = [
 
 const TodoCard = () => {
   const [createModalIsShown, setCreateModalIsShown] = useState(false);
+
+  // const { initialData } = useCMEditViewDataManager();
 
   return (
     <>
