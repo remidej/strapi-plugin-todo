@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -13,13 +13,68 @@ import { useCMEditViewDataManager } from "@strapi/helper-plugin";
 import axiosInstance from "../utils/axiosInstance";
 import CreateTaskModal from "./CreateTaskModal";
 
-const TodoCard = () => {
-  const [createModalIsShown, setCreateModalIsShown] = useState(true);
-  const { initialData } = useCMEditViewDataManager();
-  const { tasks } = initialData;
+function useRelatedTasks() {
+  const { initialData, isSingleType, slug } = useCMEditViewDataManager();
+  const [status, setStatus] = useState("loading");
+  const [tasks, setTasks] = useState([]);
 
-  const toggleTask = async (taskId, isChecked) => {
-    const res = await axiosInstance.put();
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const { data } = await axiosInstance.get(
+          `/content-manager/${
+            isSingleType ? "single-types" : "collection-types"
+          }/${slug}/${isSingleType ? "" : initialData.id}?populate=tasks`
+        );
+
+        setTasks(data.tasks);
+        setStatus("success");
+      } catch (e) {
+        setStatus("error");
+      }
+    };
+
+    fetch();
+  }, [initialData, isSingleType, axiosInstance, setTasks, setStatus]);
+
+  return { status, tasks };
+}
+
+const TodoCard = () => {
+  const [createModalIsShown, setCreateModalIsShown] = useState(false);
+  const { status, tasks } = useRelatedTasks();
+
+  const showTasks = () => {
+    // Loading state
+    if (status === "loading") {
+      return <p>Fetching todos...</p>;
+    }
+
+    if (status === "error") {
+      return <p>Could not fetch tasks.</p>;
+    }
+
+    // Empty state
+    if (tasks.length === 0) {
+      return <p>No todo yet.</p>;
+    }
+
+    // Tasks list
+    return tasks.map((task) => (
+      <Checkbox
+        value={task.isDone}
+        onValueChange={(isChecked) => toggleTask(task.id, isChecked)}
+        key={task.id}
+      >
+        <span
+          style={{
+            textDecoration: task.isDone ? "line-through" : "none",
+          }}
+        >
+          {task.name}
+        </span>
+      </Checkbox>
+    ));
   };
 
   return (
@@ -70,26 +125,7 @@ const TodoCard = () => {
           </Typography>
 
           <Stack paddingTop={3} size={2}>
-            {/* List existing todo items */}
-            {tasks ? (
-              tasks.map((task) => (
-                <Checkbox
-                  value={task.isDone}
-                  onValueChange={(isChecked) => toggleTask(task.id, isChecked)}
-                  key={task.id}
-                >
-                  <span
-                    style={{
-                      textDecoration: task.isChecked ? "line-through" : "none",
-                    }}
-                  >
-                    {task.name}
-                  </span>
-                </Checkbox>
-              ))
-            ) : (
-              <p>No todo yet.</p>
-            )}
+            {showTasks()}
           </Stack>
         </Box>
       </Box>

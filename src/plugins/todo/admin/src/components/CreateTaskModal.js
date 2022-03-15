@@ -12,25 +12,53 @@ import { useCMEditViewDataManager } from "@strapi/helper-plugin";
 import axiosInstance from "../utils/axiosInstance";
 
 const CreateTaskModal = ({ handleClose }) => {
-  const { isSingleType, slug, initialData } = useCMEditViewDataManager();
+  const [name, setName] = useState("");
+  const [status, setStatus] = useState();
+
+  const { isSingleType, slug, initialData, addRelation } =
+    useCMEditViewDataManager();
+
   const handleSubmit = async (e) => {
     // Prevent submitting parent form
     e.preventDefault();
     e.stopPropagation();
 
-    const res = await axiosInstance.put(
-      `/content-manager/${
-        isSingleType ? "single-types" : "collection-types"
-      }/${slug}/${isSingleType ? "" : initialData.id}`,
-      {
-        data: {
-          tasks: [1],
-        },
-      }
-    );
+    try {
+      // Show loading state
+      setStatus("loading");
+
+      // Create task and link it to the related entry
+      const taskRes = await axiosInstance.post(
+        "/content-manager/collection-types/plugin::todo.task",
+        {
+          name,
+          isDone: false,
+          related: {
+            __type: slug,
+            id: initialData.id,
+          },
+        }
+      );
+
+      // Remove loading and close popup
+      setStatus("success");
+      handleClose();
+    } catch (e) {
+      setStatus("error");
+    }
   };
 
-  const [text, setText] = useState("");
+  const getError = () => {
+    // Form validation error
+    if (name.length > 40) {
+      return "Content is too long";
+    }
+    // API error
+    if (status === "error") {
+      return "Could not create todo";
+    }
+    return null;
+  };
 
   return (
     <ModalLayout
@@ -50,9 +78,9 @@ const CreateTaskModal = ({ handleClose }) => {
           label="Name"
           name="text"
           hint="Max 140 characters"
-          error={text.length > 140 ? "Content is too long" : undefined}
-          onChange={(e) => setText(e.target.value)}
-          value={text}
+          error={getError()}
+          onChange={(e) => setName(e.target.value)}
+          value={name}
         />
       </ModalBody>
       <ModalFooter
