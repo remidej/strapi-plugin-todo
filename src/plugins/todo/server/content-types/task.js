@@ -23,7 +23,8 @@ module.exports = {
   attributes: {
     name: {
       type: "string",
-      minLength: 1,
+      required: true,
+      maxLength: 40,
     },
     isDone: {
       type: "boolean",
