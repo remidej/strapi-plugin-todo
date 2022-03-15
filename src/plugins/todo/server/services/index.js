@@ -1,7 +1,3 @@
-'use strict';
+"use strict";
 
-const myService = require('./my-service');
-
-module.exports = {
-  myService,
-};
+module.exports = {};
