@@ -15,8 +15,7 @@ const CreateTaskModal = ({ handleClose, refetchTasks }) => {
   const [name, setName] = useState("");
   const [status, setStatus] = useState();
 
-  const { isSingleType, slug, initialData, addRelation } =
-    useCMEditViewDataManager();
+  const { slug, initialData } = useCMEditViewDataManager();
 
   const handleSubmit = async (e) => {
     // Prevent submitting parent form
