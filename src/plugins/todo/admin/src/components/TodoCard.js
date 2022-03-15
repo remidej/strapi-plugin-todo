@@ -20,7 +20,6 @@ function useRelatedTasks() {
 
   const refetchTasks = async () => {
     try {
-      console.log("fetching tasks");
       const { data } = await axiosInstance.get(
         `/content-manager/${
           isSingleType ? "single-types" : "collection-types"
