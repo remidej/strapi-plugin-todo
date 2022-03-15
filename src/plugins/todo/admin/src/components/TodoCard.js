@@ -18,31 +18,32 @@ function useRelatedTasks() {
   const [status, setStatus] = useState("loading");
   const [tasks, setTasks] = useState([]);
 
+  const refetchTasks = async () => {
+    try {
+      console.log("fetching tasks");
+      const { data } = await axiosInstance.get(
+        `/content-manager/${
+          isSingleType ? "single-types" : "collection-types"
+        }/${slug}/${isSingleType ? "" : initialData.id}?populate=tasks`
+      );
+
+      setTasks(data.tasks);
+      setStatus("success");
+    } catch (e) {
+      setStatus("error");
+    }
+  };
+
   useEffect(() => {
-    const fetch = async () => {
-      try {
-        const { data } = await axiosInstance.get(
-          `/content-manager/${
-            isSingleType ? "single-types" : "collection-types"
-          }/${slug}/${isSingleType ? "" : initialData.id}?populate=tasks`
-        );
-
-        setTasks(data.tasks);
-        setStatus("success");
-      } catch (e) {
-        setStatus("error");
-      }
-    };
-
-    fetch();
+    refetchTasks();
   }, [initialData, isSingleType, axiosInstance, setTasks, setStatus]);
 
-  return { status, tasks };
+  return { status, tasks, refetchTasks };
 }
 
 const TodoCard = () => {
   const [createModalIsShown, setCreateModalIsShown] = useState(false);
-  const { status, tasks } = useRelatedTasks();
+  const { status, tasks, refetchTasks } = useRelatedTasks();
 
   const showTasks = () => {
     // Loading state
@@ -55,7 +56,7 @@ const TodoCard = () => {
     }
 
     // Empty state
-    if (tasks.length === 0) {
+    if (tasks == null || tasks.length === 0) {
       return <p>No todo yet.</p>;
     }
 
@@ -80,7 +81,10 @@ const TodoCard = () => {
   return (
     <>
       {createModalIsShown && (
-        <CreateTaskModal handleClose={() => setCreateModalIsShown(false)} />
+        <CreateTaskModal
+          handleClose={() => setCreateModalIsShown(false)}
+          refetchTasks={refetchTasks}
+        />
       )}
       <Box
         as="aside"

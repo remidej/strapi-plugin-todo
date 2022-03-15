@@ -11,7 +11,7 @@ import {
 import { useCMEditViewDataManager } from "@strapi/helper-plugin";
 import axiosInstance from "../utils/axiosInstance";
 
-const CreateTaskModal = ({ handleClose }) => {
+const CreateTaskModal = ({ handleClose, refetchTasks }) => {
   const [name, setName] = useState("");
   const [status, setStatus] = useState();
 
@@ -39,6 +39,9 @@ const CreateTaskModal = ({ handleClose }) => {
           },
         }
       );
+
+      // Refetch tasks list so it includes the created one
+      await refetchTasks();
 
       // Remove loading and close popup
       setStatus("success");
@@ -89,7 +92,11 @@ const CreateTaskModal = ({ handleClose }) => {
             Cancel
           </Button>
         }
-        endActions={<Button type="submit">Save</Button>}
+        endActions={
+          <Button type="submit" loading={status === "loading"}>
+            {status === "loading" ? "Saving..." : "Save"}
+          </Button>
+        }
       />
     </ModalLayout>
   );
