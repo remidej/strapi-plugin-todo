@@ -8,13 +8,26 @@ import {
   Button,
   TextInput,
 } from "@strapi/design-system";
+import { useCMEditViewDataManager } from "@strapi/helper-plugin";
+import axiosInstance from "../utils/axiosInstance";
 
 const CreateTaskModal = ({ handleClose }) => {
-  const handleSubmit = (e) => {
+  const { isSingleType, slug, initialData } = useCMEditViewDataManager();
+  const handleSubmit = async (e) => {
     // Prevent submitting parent form
     e.preventDefault();
     e.stopPropagation();
-    console.log("handle submit");
+
+    const res = await axiosInstance.put(
+      `/content-manager/${
+        isSingleType ? "single-types" : "collection-types"
+      }/${slug}/${isSingleType ? "" : initialData.id}`,
+      {
+        data: {
+          tasks: [1],
+        },
+      }
+    );
   };
 
   const [text, setText] = useState("");

@@ -13,25 +13,14 @@ import { useCMEditViewDataManager } from "@strapi/helper-plugin";
 import axiosInstance from "../utils/axiosInstance";
 import CreateTaskModal from "./CreateTaskModal";
 
-const items = [
-  {
-    text: "Do some stuff",
-    isChecked: false,
-  },
-  {
-    text: "Do some stuff",
-    isChecked: true,
-  },
-  {
-    text: "Do some stuff",
-    isChecked: false,
-  },
-];
-
 const TodoCard = () => {
-  const [createModalIsShown, setCreateModalIsShown] = useState(false);
+  const [createModalIsShown, setCreateModalIsShown] = useState(true);
+  const { initialData } = useCMEditViewDataManager();
+  const { tasks } = initialData;
 
-  // const { initialData } = useCMEditViewDataManager();
+  const toggleTask = async (taskId, isChecked) => {
+    const res = await axiosInstance.put();
+  };
 
   return (
     <>
@@ -82,23 +71,25 @@ const TodoCard = () => {
 
           <Stack paddingTop={3} size={2}>
             {/* List existing todo items */}
-            {items.map((item, index) => (
-              <Checkbox
-                value={item.isChecked}
-                onValueChange={(checked) => {
-                  console.log("toggle", checked);
-                }}
-                key={index}
-              >
-                <span
-                  style={{
-                    textDecoration: item.isChecked ? "line-through" : "none",
-                  }}
+            {tasks ? (
+              tasks.map((task) => (
+                <Checkbox
+                  value={task.isDone}
+                  onValueChange={(isChecked) => toggleTask(task.id, isChecked)}
+                  key={task.id}
                 >
-                  {item.text}
-                </span>
-              </Checkbox>
-            ))}
+                  <span
+                    style={{
+                      textDecoration: task.isChecked ? "line-through" : "none",
+                    }}
+                  >
+                    {task.name}
+                  </span>
+                </Checkbox>
+              ))
+            ) : (
+              <p>No todo yet.</p>
+            )}
           </Stack>
         </Box>
       </Box>

@@ -17,14 +17,17 @@ module.exports = {
       visible: true,
     },
     "content-type-builder": {
-      visible: true,
+      visible: false,
     },
   },
   attributes: {
-    text: {
+    name: {
       type: "string",
-      min: 1,
-      configurable: false,
+      minLength: 1,
+    },
+    isDone: {
+      type: "boolean",
+      default: false,
     },
     related: {
       type: "relation",

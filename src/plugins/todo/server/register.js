@@ -8,10 +8,8 @@ module.exports = ({ strapi }) => {
       relation: "morphMany",
       target: "plugin::todo.task",
       morphBy: "related",
-      writable: false,
       private: false,
       consigurable: false,
-      visible: false,
     };
   });
 };
