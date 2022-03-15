@@ -45,12 +45,25 @@ const TodoCard = () => {
   const [createModalIsShown, setCreateModalIsShown] = useState(false);
   const { status, tasks, refetchTasks } = useRelatedTasks();
 
+  const toggleTask = async (taskId, isChecked) => {
+    // Update task in database
+    await axiosInstance.put(
+      `/content-manager/collection-types/plugin::todo.task/${taskId}`,
+      {
+        isDone: isChecked,
+      }
+    );
+    // Call API to update local cache
+    await refetchTasks();
+  };
+
   const showTasks = () => {
     // Loading state
     if (status === "loading") {
       return <p>Fetching todos...</p>;
     }
 
+    // Error state
     if (status === "error") {
       return <p>Could not fetch tasks.</p>;
     }
@@ -60,7 +73,7 @@ const TodoCard = () => {
       return <p>No todo yet.</p>;
     }
 
-    // Tasks list
+    // Success state, show all tasks
     return tasks.map((task) => (
       <Checkbox
         value={task.isDone}
