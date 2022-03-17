@@ -1,5 +1,3 @@
-// path: ./src/plugins/my-plugin/server/content-types/content-type-a.js
-
 module.exports = {
   info: {
     tableName: "task",
