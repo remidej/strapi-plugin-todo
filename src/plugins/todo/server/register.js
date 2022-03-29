@@ -9,7 +9,7 @@ module.exports = ({ strapi }) => {
       target: "plugin::todo.task",
       morphBy: "related",
       private: false,
-      consigurable: false,
+      configurable: false,
     };
   });
 };
