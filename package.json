@@ -1,15 +1,15 @@
 {
-  "name": "todo",
-  "version": "0.0.0",
+  "name": "strapi-plugin-todo",
+  "version": "0.0.1",
   "description": "This is the description of the plugin.",
   "strapi": {
     "name": "todo",
-    "description": "Description of todo plugin",
+    "displayName": "Todo",
+    "description": "Keep track of your content management with todo lists",
     "kind": "plugin"
   },
-  "dependencies": {},
   "author": {
-    "name": "A Strapi developer"
+    "name": "Rémi de Juvigny"
   },
   "maintainers": [
     {
@@ -20,5 +20,19 @@
     "node": ">=12.x.x <=16.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@strapi-community/eslint-config": "^0.4.0",
+    "eslint": "^8.15.0",
+    "prettier": "^2.6.2"
+  },
+  "peerDependencies": {
+    "@strapi/strapi": "^4.0.0"
+  },
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@strapi/strapi": "^4.1.11"
+  }
 }
