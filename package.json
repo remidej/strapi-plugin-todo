@@ -31,8 +31,5 @@
   },
   "scripts": {
     "lint": "eslint ."
-  },
-  "dependencies": {
-    "@strapi/strapi": "^4.1.11"
   }
 }
