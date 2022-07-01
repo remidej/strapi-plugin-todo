@@ -1,7 +1,10 @@
-"use strict";
+'use strict';
 
-const taskRouter = require('./task')
+const adminRoutes = require('./admin');
 
 module.exports = {
-  task: taskRouter,
+  admin: {
+    type: 'admin',
+    routes: adminRoutes,
+  },
 };
