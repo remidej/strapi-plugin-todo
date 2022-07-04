@@ -5,7 +5,7 @@
   "strapi": {
     "name": "todo",
     "displayName": "Todo",
-    "description": "Keep track of your content management with todo lists",
+    "description": "Keep track of your content management with todo lists.",
     "kind": "plugin"
   },
   "author": {

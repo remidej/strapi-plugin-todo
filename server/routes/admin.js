@@ -7,6 +7,14 @@ const routes = [
       policies: [],
     },
   },
+  {
+    method: 'GET',
+    path: '/',
+    handler: 'task.index',
+    config: {
+      policies: [],
+    },
+  },
 ];
 
 module.exports = routes;
