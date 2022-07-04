@@ -28,10 +28,12 @@ const CreateTaskModal = ({ handleClose, refetchTasks }) => {
 
       // Create task and link it to the related entry
       const taskRes = await axiosInstance.post(
-        "/content-manager/collection-types/plugin::todo.task",
+        "/todo/tasks",
         {
           name,
           isDone: false,
+          // target_id: initialData.id,
+          // target_type: slug,
           related: {
             __type: slug,
             id: initialData.id,

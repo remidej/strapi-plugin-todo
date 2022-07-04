@@ -1,14 +1,16 @@
 'use strict';
 
+const { getService } = require("../utils");
+
 const controller = {
+  async createTask(ctx) {
+    return getService('tasks').createTask(ctx.request.body);
+  },
+
   async listRelatedTasks(ctx) {
     const { slug } = ctx.params;
     const { id } = ctx.query;
-    const tasksService = strapi.plugin('todo').service('tasks');
-    return tasksService.listRelatedTasks({ slug, id });
-  },
-  async create(ctx) {
-    return ['task'];
+    return getService('tasks').listRelatedTasks({ slug, id });
   },
 }
 

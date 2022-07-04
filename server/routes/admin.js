@@ -5,19 +5,13 @@ module.exports = {
   routes: [
     {
       method: 'POST',
-      path: '/',
-      handler: 'tasks.create',
-      config: {
-        policies: ['admin::isAuthenticatedAdmin'],
-      },
+      path: '/tasks',
+      handler: 'tasks.createTask',
     },
     {
       method: 'GET',
-      path: '/:slug',
+      path: '/tasks/:slug',
       handler: 'tasks.listRelatedTasks',
-      config: {
-        policies: ['admin::isAuthenticatedAdmin'],
-      },
     },
   ],
 };

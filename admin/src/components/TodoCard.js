@@ -21,10 +21,10 @@ function useRelatedTasks() {
   const refetchTasks = async () => {
     try {
       const { data } = await axiosInstance.get(
-        `/todo/${slug}/?id=${isSingleType ? "" : initialData.id}`
+        `/todo/tasks/${slug}?id=${isSingleType ? "" : initialData.id}`
       );
 
-      setTasks(data.tasks);
+      setTasks(data);
       setStatus("success");
     } catch (e) {
       setStatus("error");
