@@ -1,20 +1,23 @@
-const routes = [
-  {
-    method: 'POST',
-    path: '/',
-    handler: 'task.create',
-    config: {
-      policies: [],
-    },
-  },
-  {
-    method: 'GET',
-    path: '/',
-    handler: 'task.index',
-    config: {
-      policies: [],
-    },
-  },
-];
+'use strict';
 
-module.exports = routes;
+module.exports = {
+  type: 'admin',
+  routes: [
+    {
+      method: 'POST',
+      path: '/',
+      handler: 'tasks.create',
+      config: {
+        policies: ['admin::isAuthenticatedAdmin'],
+      },
+    },
+    {
+      method: 'GET',
+      path: '/:slug',
+      handler: 'tasks.listRelatedTasks',
+      config: {
+        policies: ['admin::isAuthenticatedAdmin'],
+      },
+    },
+  ],
+};

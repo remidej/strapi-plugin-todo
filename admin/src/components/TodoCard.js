@@ -21,9 +21,7 @@ function useRelatedTasks() {
   const refetchTasks = async () => {
     try {
       const { data } = await axiosInstance.get(
-        `/content-manager/${
-          isSingleType ? "single-types" : "collection-types"
-        }/${slug}/${isSingleType ? "" : initialData.id}?populate=tasks`
+        `/todo/${slug}/?id=${isSingleType ? "" : initialData.id}`
       );
 
       setTasks(data.tasks);
