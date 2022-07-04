@@ -45,7 +45,7 @@ const TodoCard = () => {
   const toggleTask = async (taskId, isChecked) => {
     // Update task in database
     await axiosInstance.put(
-      `/content-manager/collection-types/plugin::todo.task/${taskId}`,
+      `/todo/tasks/${taskId}`,
       {
         isDone: isChecked,
       }

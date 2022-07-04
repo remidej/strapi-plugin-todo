@@ -5,7 +5,11 @@ module.exports = ({ strapi }) => ({
     return strapi.entityService.create('plugin::todo.task', { data });
   },
 
-  async listRelatedTasks({ slug, id }) {
+  async updateTask({ id, data }) {
+    return strapi.entityService.update('plugin::todo.task', id, { data });
+  },
+
+  async listRelatedTasks({ id, slug }) {
     return strapi.db.query('plugin::todo.task').findMany({
       where: {
         // Only pass the related ID if it's pointing to a collection type

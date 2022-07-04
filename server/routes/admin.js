@@ -9,6 +9,11 @@ module.exports = {
       handler: 'tasks.createTask',
     },
     {
+      method: 'PUT',
+      path: '/tasks/:id',
+      handler: 'tasks.updateTask',
+    },
+    {
       method: 'GET',
       path: '/tasks/:slug',
       handler: 'tasks.listRelatedTasks',
