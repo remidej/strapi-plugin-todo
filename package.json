@@ -21,6 +21,10 @@
     "npm": ">=6.0.0"
   },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/remidej/strapi-plugin-todo.git"
+  },
   "devDependencies": {
     "@strapi-community/eslint-config": "^0.4.0",
     "eslint": "^8.15.0",
