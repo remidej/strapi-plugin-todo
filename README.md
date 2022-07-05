@@ -2,6 +2,8 @@
 
 This plugin adds a todo list next to your content in Strapi. It makes it easy for admin users to keep track of their content management.
 
+![Screenshot](screenshot.png)
+
 ### Installation
 
 Start by adding the plugin as dependency in your Strapi app:
@@ -42,5 +44,6 @@ To find out more about how this plugin was built:
 ### Credits
 
 - Design by [Raffaele Gesulfo](https://twitter.com/rgesulfo)
+- Logo help by [Maeva Lienard](https://twitter.com/MaevaLienard/)
 - Dev by [Rémi de Juvigny](https://twitter.com/remidej)
 - ❤️ and support by the [Strapi team](https://strapi.io/careers)
