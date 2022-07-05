@@ -1,6 +1,6 @@
 {
   "name": "strapi-plugin-todo",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Keep track of your content management with todo lists",
   "strapi": {
     "name": "todo",
