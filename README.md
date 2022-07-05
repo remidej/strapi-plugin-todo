@@ -31,7 +31,7 @@ npm run build && npm run develop
 - [x] Create a task
 - [x] Toggle a task
 - [x] Delete a task
-- [ ] Update a task
+- [x] Update a task
 - [ ] Assign a task to a Strapi admin
 - [ ] Set a due date for a task
 

@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  Typography,
-  Divider,
-  Flex,
-  Icon,
-  IconButton,
-  IconButtonGroup,
-} from '@strapi/design-system';
+import { Box, Divider, Flex, IconButton, TextButton, Typography } from '@strapi/design-system';
 import { Plus } from '@strapi/icons';
 import styled from 'styled-components';
 import axiosInstance from '../utils/axiosInstance';
@@ -47,19 +39,17 @@ const TodoCard = () => {
           <Box paddingBottom={2}>
             <Divider />
           </Box>
-          <Typography
-            fontSize={2}
-            textColor="primary600"
-            as="button"
-            type="button"
-            onClick={() => setCreateModalIsShown(true)}
-          >
-            <Flex>
-              <Icon as={Plus} color="primary600" marginRight={2} width={3} height={3} />
-              Add todo
-            </Flex>
-          </Typography>
-          <Box paddingTop={3}>
+          <Flex paddingTop={2} justifyContent="space-between">
+            <TextButton startIcon={<Plus />} onClick={() => setCreateModalIsShown(true)}>
+              <Typography variant="omega" textColor="primary600">
+                Add todo
+              </Typography>
+            </TextButton>
+            <Typography textColor="neutral600" variant="omega">
+              {tasks.filter((task) => task.isDone).length}/{tasks.length}
+            </Typography>
+          </Flex>
+          <Box paddingTop={2}>
             <TasksList status={status} tasks={tasks} refetchTasks={refetchTasks} />
           </Box>
         </Box>
