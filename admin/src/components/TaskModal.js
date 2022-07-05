@@ -11,7 +11,7 @@ import {
 import { useCMEditViewDataManager } from '@strapi/helper-plugin';
 import axiosInstance from '../utils/axiosInstance';
 
-const TaskModal = ({ handleClose, refetchTasks, task }) => {
+const TaskModal = ({ handleClose, refetchTasks, task, action }) => {
   const [name, setName] = useState(task?.name || '');
   const [status, setStatus] = useState();
 
@@ -36,14 +36,14 @@ const TaskModal = ({ handleClose, refetchTasks, task }) => {
             id: initialData.id,
           },
         });
-      } else if (action === 'update') {
+      } else if (action === 'edit') {
         // Update task
         const taskRes = await axiosInstance.put(`/todo/tasks/${task.id}`, {
           name,
         });
       }
 
-      // Refetch tasks list so it includes the created one
+      // Refetch tasks list so it includes up to date data
       await refetchTasks();
 
       // Remove loading and close popup
