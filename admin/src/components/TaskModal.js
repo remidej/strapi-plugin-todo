@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   ModalLayout,
   ModalHeader,
@@ -7,12 +7,12 @@ import {
   Typography,
   Button,
   TextInput,
-} from "@strapi/design-system";
-import { useCMEditViewDataManager } from "@strapi/helper-plugin";
-import axiosInstance from "../utils/axiosInstance";
+} from '@strapi/design-system';
+import { useCMEditViewDataManager } from '@strapi/helper-plugin';
+import axiosInstance from '../utils/axiosInstance';
 
-const CreateTaskModal = ({ handleClose, refetchTasks }) => {
-  const [name, setName] = useState("");
+const TaskModal = ({ handleClose, refetchTasks, task }) => {
+  const [name, setName] = useState(task?.name || '');
   const [status, setStatus] = useState();
 
   const { slug, initialData } = useCMEditViewDataManager();
@@ -24,56 +24,54 @@ const CreateTaskModal = ({ handleClose, refetchTasks }) => {
 
     try {
       // Show loading state
-      setStatus("loading");
+      setStatus('loading');
 
-      // Create task and link it to the related entry
-      const taskRes = await axiosInstance.post(
-        "/todo/tasks",
-        {
+      if (action === 'create') {
+        // Create task and link it to the related entry
+        const taskRes = await axiosInstance.post('/todo/tasks', {
           name,
           isDone: false,
-          // target_id: initialData.id,
-          // target_type: slug,
           related: {
             __type: slug,
             id: initialData.id,
           },
-        }
-      );
+        });
+      } else if (action === 'update') {
+        // Update task
+        const taskRes = await axiosInstance.put(`/todo/tasks/${task.id}`, {
+          name,
+        });
+      }
 
       // Refetch tasks list so it includes the created one
       await refetchTasks();
 
       // Remove loading and close popup
-      setStatus("success");
+      setStatus('success');
       handleClose();
     } catch (e) {
-      setStatus("error");
+      setStatus('error');
     }
   };
 
   const getError = () => {
     // Form validation error
     if (name.length > 40) {
-      return "Content is too long";
+      return 'Content is too long';
     }
     // API error
-    if (status === "error") {
-      return "Could not create todo";
+    if (status === 'error') {
+      return 'Could not create todo';
     }
     return null;
   };
 
   return (
-    <ModalLayout
-      onClose={handleClose}
-      labelledBy="title"
-      as="form"
-      onSubmit={handleSubmit}
-    >
+    <ModalLayout onClose={handleClose} labelledBy="title" as="form" onSubmit={handleSubmit}>
       <ModalHeader>
         <Typography fontWeight="bold" textColor="neutral800" as="h2" id="title">
-          Add todo
+          {action === 'create' && 'Add todo'}
+          {action === 'edit' && 'Edit todo'}
         </Typography>
       </ModalHeader>
       <ModalBody>
@@ -94,8 +92,8 @@ const CreateTaskModal = ({ handleClose, refetchTasks }) => {
           </Button>
         }
         endActions={
-          <Button type="submit" loading={status === "loading"}>
-            {status === "loading" ? "Saving..." : "Save"}
+          <Button type="submit" loading={status === 'loading'}>
+            {status === 'loading' ? 'Saving...' : 'Save'}
           </Button>
         }
       />
@@ -103,4 +101,4 @@ const CreateTaskModal = ({ handleClose, refetchTasks }) => {
   );
 };
 
-export default CreateTaskModal;
+export default TaskModal;

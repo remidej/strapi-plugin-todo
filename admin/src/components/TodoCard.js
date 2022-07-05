@@ -8,12 +8,25 @@ import {
   Flex,
   Icon,
   IconButton,
+  IconButtonGroup,
 } from '@strapi/design-system';
-import Plus from '@strapi/icons/Plus';
-import Trash from '@strapi/icons/Trash';
+import { Trash, Plus, Pencil } from '@strapi/icons';
+import styled from 'styled-components';
 import { useCMEditViewDataManager } from '@strapi/helper-plugin';
 import axiosInstance from '../utils/axiosInstance';
-import CreateTaskModal from './CreateTaskModal';
+import TaskModal from './TaskModal';
+
+const Wrapper = styled(Flex)`
+  min-height: 2rem;
+  > :last-child {
+    display: none;
+  }
+  &:hover {
+    > :last-child {
+      display: flex;
+    }
+  }
+`;
 
 function useRelatedTasks() {
   const { initialData, isSingleType, slug } = useCMEditViewDataManager();
@@ -42,6 +55,7 @@ function useRelatedTasks() {
 
 const TodoCard = () => {
   const [createModalIsShown, setCreateModalIsShown] = useState(false);
+  const [editModalIsShown, setEditModalIsShown] = useState(false);
   const { status, tasks, refetchTasks } = useRelatedTasks();
 
   const toggleTask = async (taskId, isChecked) => {
@@ -76,7 +90,7 @@ const TodoCard = () => {
 
     // Success state, show all tasks
     return tasks.map((task) => (
-      <Flex justifyContent="space-between" key={task.id}>
+      <Wrapper justifyContent="space-between" key={task.id}>
         <Checkbox value={task.isDone} onValueChange={(isChecked) => toggleTask(task.id, isChecked)}>
           <span
             style={{
@@ -88,15 +102,24 @@ const TodoCard = () => {
             {task.name}
           </span>
         </Checkbox>
-        <IconButton noBorder icon={<Trash />} label="Delete" onClick={() => deleteTask(task.id)} />
-      </Flex>
+        <Flex flexDirection="row" justifyContent="flex-end">
+          <IconButton icon={<Pencil />} noBorder label="Edit" onClick={() => editTask(task.id)} />
+          <IconButton
+            icon={<Trash />}
+            noBorder
+            label="Delete"
+            onClick={() => deleteTask(task.id)}
+          />
+        </Flex>
+      </Wrapper>
     ));
   };
 
   return (
     <>
       {createModalIsShown && (
-        <CreateTaskModal
+        <TaskModal
+          action="create"
           handleClose={() => setCreateModalIsShown(false)}
           refetchTasks={refetchTasks}
         />
@@ -133,9 +156,7 @@ const TodoCard = () => {
             </Flex>
           </Typography>
 
-          <Stack paddingTop={3} size={1}>
-            {showTasks()}
-          </Stack>
+          <Stack paddingTop={3}>{showTasks()}</Stack>
         </Box>
       </Box>
     </>
