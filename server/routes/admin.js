@@ -14,6 +14,11 @@ module.exports = {
       handler: 'tasks.updateTask',
     },
     {
+      method: 'DELETE',
+      path: '/tasks/:id',
+      handler: 'tasks.deleteTask',
+    },
+    {
       method: 'GET',
       path: '/tasks/:slug',
       handler: 'tasks.listRelatedTasks',

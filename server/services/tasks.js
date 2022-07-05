@@ -9,16 +9,19 @@ module.exports = ({ strapi }) => ({
     return strapi.entityService.update('plugin::todo.task', id, { data });
   },
 
+  async deleteTask(id) {
+    return strapi.entityService.delete('plugin::todo.task', id);
+  },
+
   async listRelatedTasks({ id, slug }) {
     return strapi.db.query('plugin::todo.task').findMany({
       where: {
         // Only pass the related ID if it's pointing to a collection type
-        ...(id !== "" && ({
+        ...(id !== '' && {
           target_id: id,
-        })),
+        }),
         target_type: slug,
       },
     });
   },
-
 });

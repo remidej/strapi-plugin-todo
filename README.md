@@ -28,8 +28,9 @@ npm run build && npm run develop
 
 ### Features & roadmap
 
-- [X] Create a task
-- [X] Toggle a task
+- [x] Create a task
+- [x] Toggle a task
+- [x] Delete a task
 - [ ] Update a task
 - [ ] Assign a task to a Strapi admin
 - [ ] Set a due date for a task

@@ -1,6 +1,6 @@
 'use strict';
 
-const { getService } = require("../utils");
+const { getService } = require('../utils');
 
 const controller = {
   async createTask(ctx) {
@@ -13,11 +13,15 @@ const controller = {
     return getService('tasks').updateTask({ id, data });
   },
 
+  async deleteTask(ctx) {
+    return getService('tasks').deleteTask(ctx.params.id);
+  },
+
   async listRelatedTasks(ctx) {
     const { slug } = ctx.params;
     const { id } = ctx.query;
     return getService('tasks').listRelatedTasks({ slug, id });
   },
-}
+};
 
 module.exports = controller;
