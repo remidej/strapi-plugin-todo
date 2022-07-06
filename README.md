@@ -1,4 +1,4 @@
-# strapi-plugin-todo
+# <img src="./logo.png" alt="Logo" width="50" height="50" /> strapi-plugin-todo
 
 This plugin adds a todo list next to your content in Strapi. It makes it easy for admin users to keep track of their content management.
 
@@ -45,6 +45,5 @@ To find out more about how this plugin was built:
 ### Credits
 
 - Design by [Raffaele Gesulfo](https://twitter.com/rgesulfo)
-- Logo help by [Maeva Lienard](https://twitter.com/MaevaLienard/)
 - Dev by [Rémi de Juvigny](https://twitter.com/remidej)
 - ❤️ and support by the [Strapi team](https://strapi.io/careers)
