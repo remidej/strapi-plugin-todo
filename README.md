@@ -4,8 +4,6 @@
 
 This plugin adds a todo list next to your content in Strapi. It makes it easy for admin users to keep track of their content management.
 
-<img src="./logo.png" alt="Logo" width="50" height="50" />
-
 ![Screenshot](./screenshot.png)
 
 ### Installation
