@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Box, Flex, Checkbox, IconButton } from '@strapi/design-system';
+import { Box, Flex, Checkbox, IconButton, Typography } from '@strapi/design-system';
 import { Trash, Pencil } from '@strapi/icons';
 import axiosInstance from '../utils/axiosInstance';
 import TaskModal from './TaskModal';
@@ -17,7 +17,7 @@ const Wrapper = styled(Flex)`
   }
 `;
 
-const TasksList = ({ tasks, status, refetchTasks }) => {
+const TasksList = ({ tasks, status, refetchTasks, isCreatingEntry }) => {
   const [taskBeingEdited, setTaskBeingEdited] = useState(null);
 
   const toggleTask = async (taskId, isChecked) => {
@@ -37,6 +37,17 @@ const TasksList = ({ tasks, status, refetchTasks }) => {
     await axiosInstance.delete(`/todo/tasks/${taskId}`);
     await refetchTasks();
   };
+
+  // Disabled
+  if (isCreatingEntry) {
+    return (
+      <Box paddingTop={6} color="neutral600" textAlign="center">
+        <Typography variant="omega">
+          Save your entry to start managing todos.
+        </Typography>
+      </Box>
+    );
+  }
 
   // Loading state
   if (status === 'loading') {

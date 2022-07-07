@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Divider, Flex, IconButton, TextButton, Typography } from '@strapi/design-system';
 import { Plus } from '@strapi/icons';
+import { useCMEditViewDataManager } from '@strapi/helper-plugin';
 import styled from 'styled-components';
 import axiosInstance from '../utils/axiosInstance';
 import TaskModal from './TaskModal';
@@ -10,6 +11,7 @@ import TasksList from './TasksList';
 const TodoCard = () => {
   const [createModalIsShown, setCreateModalIsShown] = useState(false);
   const { status, tasks, refetchTasks } = useRelatedTasks();
+  const { isCreatingEntry } = useCMEditViewDataManager();
 
   return (
     <>
@@ -40,8 +42,12 @@ const TodoCard = () => {
             <Divider />
           </Box>
           <Flex paddingTop={2} justifyContent="space-between">
-            <TextButton startIcon={<Plus />} onClick={() => setCreateModalIsShown(true)}>
-              <Typography variant="omega" textColor="primary600">
+            <TextButton
+              startIcon={<Plus />}
+              onClick={() => setCreateModalIsShown(true)}
+              disabled={isCreatingEntry}
+            >
+              <Typography variant="omega" textColor={isCreatingEntry ? 'neutral600' : 'primary600'}>
                 Add todo
               </Typography>
             </TextButton>
@@ -50,7 +56,12 @@ const TodoCard = () => {
             </Typography>
           </Flex>
           <Box paddingTop={2}>
-            <TasksList status={status} tasks={tasks} refetchTasks={refetchTasks} />
+            <TasksList
+              status={status}
+              tasks={tasks}
+              refetchTasks={refetchTasks}
+              isCreatingEntry={isCreatingEntry}
+            />
           </Box>
         </Box>
       </Box>
