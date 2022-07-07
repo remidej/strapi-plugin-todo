@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Flex, Checkbox, IconButton } from '@strapi/design-system';
+import { Box, Flex, Checkbox, IconButton } from '@strapi/design-system';
 import { Trash, Pencil } from '@strapi/icons';
 import axiosInstance from '../utils/axiosInstance';
 import TaskModal from './TaskModal';
@@ -40,17 +40,29 @@ const TasksList = ({ tasks, status, refetchTasks }) => {
 
   // Loading state
   if (status === 'loading') {
-    return <p>Fetching todos...</p>;
+    return (
+      <Box paddingTop={6} color="neutral600" textAlign="center">
+        Fetching todos...
+      </Box>
+    );
   }
 
   // Error state
   if (status === 'error') {
-    return <p>Could not fetch tasks.</p>;
+    return (
+      <Box paddingTop={6} color="danger600" textAlign="center">
+        Could not fetch tasks.
+      </Box>
+    );
   }
 
   // Empty state
   if (tasks == null || tasks.length === 0) {
-    return <p>No todo yet.</p>;
+    return (
+      <Box paddingTop={6} color="neutral600" textAlign="center">
+        No todo yet.
+      </Box>
+    );
   }
 
   // Success state, show all tasks
