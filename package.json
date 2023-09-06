@@ -1,7 +1,7 @@
 {
   "name": "strapi-plugin-todo",
   "version": "0.0.9",
-  "description": "Keep track of your content management with todo lists",
+  "description": "Keep track of your content management with todo lists.",
   "strapi": {
     "name": "todo",
     "displayName": "Todo",
@@ -17,7 +17,7 @@
     }
   ],
   "engines": {
-    "node": ">=12.x.x <=16.x.x",
+    "node": ">=12.x.x <=18.x.x",
     "npm": ">=6.0.0"
   },
   "license": "MIT",
@@ -26,9 +26,9 @@
     "url": "git+https://github.com/remidej/strapi-plugin-todo.git"
   },
   "devDependencies": {
-    "@strapi-community/eslint-config": "^0.4.0",
-    "eslint": "^8.15.0",
-    "prettier": "^2.6.2"
+    "@strapi-community/eslint-config": "^0.4.3",
+    "eslint": "^8.48.0",
+    "prettier": "^3.0.3"
   },
   "peerDependencies": {
     "@strapi/strapi": "^4.0.0"
